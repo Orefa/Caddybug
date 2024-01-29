@@ -1,0 +1,27 @@
+{
+	debug
+    default_sni 10.15.105.123
+    servers {
+		strict_sni_host insecure_off
+	}
+}
+
+
+10.15.105.123 {
+
+  tls internal {
+    client_auth {
+     mode require_and_verify
+     trusted_ca_cert_file root.crt
+    }
+  }
+  handle_path / {
+    respond "{http.request.tls.client.serial}"
+  }
+}
+
+127.0.0.1 {
+  handle_path / {
+    respond "{http.request.tls.client.serial}"
+  }
+}
